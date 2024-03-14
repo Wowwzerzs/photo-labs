@@ -2,7 +2,9 @@ import React from 'react';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
-const PhotoDetailsModal = ({ closeModal }) => { // Receive closeModal prop
+const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
+  console.log("Single Photo Detail:", singlePhotoDetail); // Log single photo detail
+
   return (
     <div className="photo-details-modal">
       <div className="photo-details-modal__top-bar">

@@ -4,10 +4,11 @@ import TopNavigationBar from "../components/TopNavigationBar";
 import PhotoList from "../components/PhotoList";
 import PhotoDetailsModal from "./PhotoDetailsModal";
 
-const HomeRoute = ({ photos, topics }) => {
+const HomeRoute = ({ photos, topics, setPhotoDetail }) => { // Renamed prop to setPhotoDetail
   const [favoritePhotos, setFavoritePhotos] = useState([]);
   const [displayModal, setDisplayModal] = useState(false); // State for modal visibility
   const [selectedPhoto, setSelectedPhoto] = useState(null); // State for selected photo ID
+  const [singlePhotoDetail, setSinglePhotoDetail] = useState(null); // State for single photo detail
 
   const toggleFavorite = (photoId) => {
     if (favoritePhotos.includes(photoId)) {
@@ -17,10 +18,11 @@ const HomeRoute = ({ photos, topics }) => {
     }
   };
 
-  const handlePhotoClick = (photoId) => {
-    setSelectedPhoto(photoId);
+  const handlePhotoClick = (photo) => { // Modified to receive the entire photo object
+    setSelectedPhoto(photo.id);
+    setSinglePhotoDetail(photo); // Set the single photo detail
     setDisplayModal(true); // Open the modal
-    console.log("Selected Photo ID:", photoId); // Log selected photo ID
+    console.log("Selected Photo Detail:", photo); // Log selected photo detail
   };
 
   const closeModal = () => {
@@ -39,8 +41,8 @@ const HomeRoute = ({ photos, topics }) => {
       />
       {displayModal && (
         <PhotoDetailsModal
-          photoId={selectedPhoto}
           closeModal={closeModal}
+          singlePhotoDetail={singlePhotoDetail}
         />
       )}
     </div>
