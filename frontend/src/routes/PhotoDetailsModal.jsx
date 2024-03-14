@@ -1,31 +1,23 @@
+// PhotoDetailsModal.js
 import React from 'react';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
-import PhotoList from '../components/PhotoList';
-import PhotoListItem from '../components/PhotoListItem'; 
+import PhotoList from '../components/PhotoList'; 
 import PhotoFavButton from '../components/PhotoFavButton'; 
 
 const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
-  // Function to handle toggling favorite status of a photo
   const toggleFavorite = (photoId) => {
-    // Handle favorite toggle logic here
+    // Implement logic to toggle favorite status of a photo
     console.log(`Toggle favorite for photo ${photoId}`);
   };
 
-  // Logic to check if the photo is marked as favorite
-  const isFavorite = singlePhotoDetail && singlePhotoDetail.isFavorite;
-
-  // Function to render the favorite button
   const renderFavButton = () => {
-    // Render nothing if photo detail is not available
     if (!singlePhotoDetail) return null;
-    
-    // Render the favorite button component with appropriate props
     return (
       <PhotoFavButton
         photoId={singlePhotoDetail.id}
-        toggleFavorite={toggleFavorite}
-        isFavorite={isFavorite}
+        toggleFavorite={toggleFavorite} // Pass toggleFavorite function
+        isFavorite={singlePhotoDetail.isFavorite}
       />
     );
   };
@@ -65,9 +57,9 @@ const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
                 alt={singlePhotoDetail.user.name}
               />
               {/* Display location details if available */}
-              {singlePhotoDetail.user.location && (
+              {singlePhotoDetail.user.location && ( // Check if location object exists
                 <div>
-                  <p>Location: {singlePhotoDetail.user.location}</p>
+                  <p>Location: {singlePhotoDetail.user.location}</p> {/* Assuming location is a string */}
                   <p>City: {singlePhotoDetail.user.location.city}</p>
                   <p>Country: {singlePhotoDetail.user.location.country}</p>
                 </div>
@@ -79,14 +71,8 @@ const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
         {singlePhotoDetail && singlePhotoDetail.similarPhotos && singlePhotoDetail.similarPhotos.length > 0 && (
           <div className="photo-details-modal__images">
             <h3>Similar Photos</h3>
-            {/* Render similar photos using the PhotoListItem component */}
-            {singlePhotoDetail.similarPhotos.map(photo => (
-              <PhotoListItem
-                key={photo.id}
-                photo={photo}
-                handleClick={() => {}}
-              />
-            ))}
+            {/* Render similar photos using the PhotoList component */}
+            <PhotoList photos={singlePhotoDetail.similarPhotos} /> {/* Use PhotoList component */}
           </div>
         )}
       </div>

@@ -5,7 +5,6 @@ import PhotoList from "../components/PhotoList";
 import PhotoDetailsModal from "./PhotoDetailsModal";
 
 const HomeRoute = ({ photos, topics, setPhotoDetail }) => {
-  // State variables
   const [favoritePhotos, setFavoritePhotos] = useState([]);
   const [displayModal, setDisplayModal] = useState(false);
   const [singlePhotoDetail, setSinglePhotoDetail] = useState(null);
