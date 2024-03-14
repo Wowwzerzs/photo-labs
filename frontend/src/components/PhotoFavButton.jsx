@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from 'react';
-import FavIcon from './FavIcon';
-import '../styles/PhotoFavButton.scss';
+import React, { useState } from "react";
+import FavIcon from "./FavIcon";
+import "../styles/PhotoFavButton.scss";
 
 function PhotoFavButton({ photoId }) {
   const [selected, setSelected] = useState(false);
 
   const toggleFav = () => {
-    setSelected(prevSelected => !prevSelected); 
+    setSelected((prevSelected) => !prevSelected);
+    // Here you can handle your logic for toggling the favorite status based on photoId
   };
 
   return (
