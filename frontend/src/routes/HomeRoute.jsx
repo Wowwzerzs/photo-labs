@@ -41,7 +41,7 @@ const HomeRoute = ({ photos, topics, setPhotoDetail }) => {
         favoritePhotos={favoritePhotos}
         handlePhotoClick={handlePhotoClick}
       />
-      {/* Display modal if displayModal state is true */}
+  
       {displayModal && (
         <PhotoDetailsModal
           closeModal={closeModal}
