@@ -3,11 +3,11 @@ import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
 function PhotoFavButton() {
-  const [selected, setSelected] = useState(false); // State to manage whether the photo is favorited or not
+  const [selected, setSelected] = useState(false);
 
   const toggleFav = useCallback(() => {
-    setSelected(!selected);
-  }, [selected]);
+    setSelected(prevSelected => !prevSelected);
+  }, []);
 
   return (
     <div className="photo-list__fav-icon" onClick={toggleFav}>
@@ -16,6 +16,6 @@ function PhotoFavButton() {
       </div>
     </div>
   );
-};
+}
 
 export default PhotoFavButton;
