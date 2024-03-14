@@ -1,4 +1,3 @@
-// Updated PhotoListItem component
 import React from "react";
 import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss";
@@ -9,7 +8,7 @@ const PhotoListItem = (props) => {
   return (
     <div className="photo-list__item">
       <div className="photo-list__fav-icon">
-        <PhotoFavButton />
+        <PhotoFavButton photoId={id} />
       </div>
       <img src={imageSource} alt="Photograph" className="photo-list__image" />
       <div className="photo-list__user-details">
