@@ -1,14 +1,13 @@
-// frontend/src/routes/HomeRoute.jsx
 import React, { useState } from "react";
 import "../styles/HomeRoute.scss";
 import TopNavigationBar from "../components/TopNavigationBar";
 import PhotoList from "../components/PhotoList";
-import PhotoDetailsModal from "./PhotoDetailsModal"; // Import the PhotoDetailsModal component
+import PhotoDetailsModal from "./PhotoDetailsModal";
 
 const HomeRoute = ({ photos, topics }) => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
-  const [showModal, setShowModal] = useState(false); // State to control the modal visibility
-  const [selectedPhoto, setSelectedPhoto] = useState(null); // State to store the selected photo ID
+  const [displayModal, setDisplayModal] = useState(false); // State for modal visibility
+  const [selectedPhoto, setSelectedPhoto] = useState(null); // State for selected photo ID
 
   const toggleFavorite = (photoId) => {
     if (favoritePhotos.includes(photoId)) {
@@ -19,12 +18,12 @@ const HomeRoute = ({ photos, topics }) => {
   };
 
   const handlePhotoClick = (photoId) => {
-    setSelectedPhoto(photoId); // Set the selected photo ID
-    setShowModal(true); // Show the modal
+    setSelectedPhoto(photoId);
+    setDisplayModal(true); // Open the modal
   };
 
   const closeModal = () => {
-    setShowModal(false); // Hide the modal
+    setDisplayModal(false); // Close the modal
   };
 
   return (
@@ -34,12 +33,12 @@ const HomeRoute = ({ photos, topics }) => {
         photos={photos}
         toggleFavorite={toggleFavorite}
         favoritePhotos={favoritePhotos}
-        handlePhotoClick={handlePhotoClick} // Pass the handlePhotoClick function
+        handlePhotoClick={handlePhotoClick}
       />
-      {showModal && (
+      {displayModal && (
         <PhotoDetailsModal
           photoId={selectedPhoto}
-          closeModal={closeModal} // Pass the closeModal function
+          closeModal={closeModal}
         />
       )}
     </div>
