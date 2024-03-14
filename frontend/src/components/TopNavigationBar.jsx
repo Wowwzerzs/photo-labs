@@ -8,8 +8,10 @@ const TopNavigationBar = ({ topics, favoriteCount }) => {
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
       <TopicList topics={topics} />
+      {favoriteCount > 0 && <div className="notification">You have {favoriteCount} favorited photo(s).</div>}
       <FavBadge favoriteCount={favoriteCount} />
     </div>
-  )
-}
+  );
+};
+
 export default TopNavigationBar;
