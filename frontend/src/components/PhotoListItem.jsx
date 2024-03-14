@@ -1,4 +1,3 @@
-// frontend/src/components/PhotoListItem.jsx
 import React from "react";
 import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss";
@@ -9,7 +8,7 @@ const PhotoListItem = ({ photo, handleClick }) => {
   const { full } = urls;
 
   return (
-    <div className="photo-list__item" onClick={() => handleClick(id)}> {/* Call handleClick function on click */}
+    <div className="photo-list__item" onClick={() => handleClick(id)}> 
       <div className="photo-list__fav-icon">
         <PhotoFavButton photoId={id} />
       </div>

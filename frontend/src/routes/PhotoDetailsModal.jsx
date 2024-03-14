@@ -1,13 +1,13 @@
-import React from "react";
-import "../styles/PhotoDetailsModal.scss";
-import closeSymbol from "../assets/closeSymbol.svg";
+import React from 'react';
+import '../styles/PhotoDetailsModal.scss';
+import closeSymbol from '../assets/closeSymbol.svg';
 
-const PhotoDetailsModal = () => {
+const PhotoDetailsModal = ({ closeModal }) => { // Accept closeModal function as prop
   return (
     <div className="photo-details-modal">
       <div className="photo-details-modal__top-bar">
         <h2 className="photo-details-modal__header">Photo Details</h2>
-        <button className="photo-details-modal__close-button">
+        <button className="photo-details-modal__close-button" onClick={closeModal}> {/* Add onClick event to close the modal */}
           <img src={closeSymbol} alt="close symbol" />
         </button>
       </div>
