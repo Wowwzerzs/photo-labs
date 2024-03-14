@@ -8,7 +8,7 @@ const PhotoListItem = ({ photo, handleClick }) => {
   const { full } = urls;
 
   return (
-    <div className="photo-list__item" onClick={() => handleClick(id)}> 
+    <div className="photo-list__item" onClick={() => handleClick(photo)}> {/* Pass the entire photo object */}
       <div className="photo-list__fav-icon">
         <PhotoFavButton photoId={id} />
       </div>
