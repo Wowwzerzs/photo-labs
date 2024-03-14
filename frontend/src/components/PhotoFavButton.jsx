@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import FavIcon from "./FavIcon";
 import "../styles/PhotoFavButton.scss";
 
-function PhotoFavButton({ photoId }) {
-  const [selected, setSelected] = useState(false);
-
+function PhotoFavButton({ photoId, toggleFavorite, isFavorite }) {
   const toggleFav = () => {
-    setSelected((prevSelected) => !prevSelected);
-    // Here you can handle your logic for toggling the favorite status based on photoId
+    toggleFavorite(photoId);
   };
 
   return (
     <div className="photo-list__fav-icon" onClick={toggleFav}>
       <div className="photo-list__fav-icon-svg">
-        <FavIcon selected={selected} />
+        <FavIcon selected={isFavorite} />
       </div>
     </div>
   );
