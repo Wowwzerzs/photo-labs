@@ -20,10 +20,12 @@ const HomeRoute = ({ photos, topics }) => {
   const handlePhotoClick = (photoId) => {
     setSelectedPhoto(photoId);
     setDisplayModal(true); // Open the modal
+    console.log("Selected Photo ID:", photoId); // Log selected photo ID
   };
 
   const closeModal = () => {
     setDisplayModal(false); // Close the modal
+    console.log("Modal Closed"); // Log modal closure
   };
 
   return (

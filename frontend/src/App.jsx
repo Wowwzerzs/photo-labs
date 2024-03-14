@@ -1,8 +1,7 @@
-// App.jsx
 import React, { useState } from "react";
 import "./App.scss";
 import HomeRoute from "./routes/HomeRoute";
-import PhotoDetailsModal from "./routes/PhotoDetailsModal"; // Import the PhotoDetailsModal component
+import PhotoDetailsModal from "./routes/PhotoDetailsModal"; 
 import photos from "./mocks/photos";
 import topics from "./mocks/topics";
 
@@ -11,6 +10,7 @@ const App = () => {
 
   const closeModal = () => {
     setDisplayModal(false);
+    console.log("Modal Closed"); // Log modal closure
   };
 
   return (
