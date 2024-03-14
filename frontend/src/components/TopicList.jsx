@@ -1,5 +1,5 @@
 import React from "react";
-import TopicListItem from './TopicListItem';
+import TopicListItem from "./TopicListItem";
 import "../styles/TopicList.scss";
 
 const sampleDataForTopicList = [
