@@ -1,3 +1,4 @@
+// Updated PhotoListItem component
 import React from "react";
 import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss";
