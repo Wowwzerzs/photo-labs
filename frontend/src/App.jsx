@@ -15,12 +15,16 @@ const sampleDataForPhotoListItem = {
 };
 
 // Note: Rendering a single component to build components in isolation
-const App = () => {
-  return (
-    <div className="App">
-      <PhotoListItem/>
-    </div>
-  );
-};
+const App = () => (
+  <div className="App">
+    <PhotoListItem
+      id={sampleDataForPhotoListItem.id}
+      location={`${sampleDataForPhotoListItem.location.city}, ${sampleDataForPhotoListItem.location.country}`}
+      imageSource={sampleDataForPhotoListItem.imageSource}
+      username={sampleDataForPhotoListItem.username}
+      profile={sampleDataForPhotoListItem.profile}
+    />
+  </div>
+);
 
 export default App;
