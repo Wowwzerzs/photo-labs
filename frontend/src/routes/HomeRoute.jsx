@@ -3,6 +3,7 @@ import "../styles/HomeRoute.scss";
 import TopNavigationBar from "../components/TopNavigationBar";
 import PhotoList from "../components/PhotoList";
 import PhotoDetailsModal from "./PhotoDetailsModal";
+import PhotoFavButton from "../components/PhotoFavButton"; // Import PhotoFavButton component
 
 const HomeRoute = ({ photos, topics, setPhotoDetail }) => {
   const [favoritePhotos, setFavoritePhotos] = useState([]);
@@ -45,7 +46,16 @@ const HomeRoute = ({ photos, topics, setPhotoDetail }) => {
         <PhotoDetailsModal
           closeModal={closeModal}
           singlePhotoDetail={singlePhotoDetail}
-        />
+        >
+          {/* Include PhotoFavButton component here */}
+          <div className="photo-details-modal__fav-button">
+            <PhotoFavButton
+              photoId={singlePhotoDetail.id}
+              toggleFavorite={toggleFavorite}
+              isFavorite={favoritePhotos.includes(singlePhotoDetail.id)}
+            />
+          </div>
+        </PhotoDetailsModal>
       )}
     </div>
   );
