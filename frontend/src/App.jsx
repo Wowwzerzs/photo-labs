@@ -1,33 +1,49 @@
-import React, { useState } from "react";
+import React, { createContext } from "react";
 import "./App.scss";
 import HomeRoute from "./routes/HomeRoute";
-import PhotoDetailsModal from "./routes/PhotoDetailsModal"; 
-import photos from "./mocks/photos";
-import topics from "./mocks/topics";
+import PhotoDetailsModal from "./routes/PhotoDetailsModal";
+import useApplicationData from "./hooks/useApplicationData";
+
+// Create the FavoritesContext
+export const FavoritesContext = createContext(null);
 
 const App = () => {
-  const [displayModal, setDisplayModal] = useState(false);
-  const [singlePhotoDetail, setSinglePhotoDetail] = useState(null); // State for single photo details
-
-  const closeModal = () => {
-    setDisplayModal(false);
-    console.log("Modal Closed"); // Log modal closure
-  };
+  const {
+    favorites,
+    setFavorites,
+    activePhoto,
+    setActivePhoto,
+    showModal,
+    setShowModal,
+    isLike,
+    setIsLike,
+    photoData,
+    topics,
+    setUrl,
+    topicListPhotos,
+  } = useApplicationData();
 
   return (
     <div className="App">
-      <HomeRoute
-        photos={photos}
-        topics={topics}
-        setDisplayModal={setDisplayModal}
-        setSinglePhotoDetail={setSinglePhotoDetail} // Pass the setSinglePhotoDetail function
-      />
-      {displayModal && (
-        <PhotoDetailsModal
-          closeModal={closeModal}
-          singlePhotoDetail={singlePhotoDetail} // Pass the singlePhotoDetail state
-        />
-      )}
+      <FavoritesContext.Provider
+        value={{
+          favorites,
+          setFavorites,
+          isLike,
+          setIsLike,
+          setActivePhoto,
+          setShowModal,
+          activePhoto,
+          photoData,
+          topics,
+          setUrl,
+          topicListPhotos,
+        }}
+      >
+        {/* Render both HomeRoute and PhotoDetailsModal within the FavoritesContext.Provider */}
+        <HomeRoute topics={topics} />
+        {showModal && <PhotoDetailsModal singlePhotoDetail={activePhoto} closeModal={() => setShowModal(false)} />}
+      </FavoritesContext.Provider>
     </div>
   );
 };

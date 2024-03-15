@@ -1,23 +1,22 @@
-// PhotoDetailsModal.js
-import React from 'react';
+import React, { useContext } from 'react';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoList from '../components/PhotoList'; 
 import PhotoFavButton from '../components/PhotoFavButton'; 
+import { FavoritesContext } from 'App'; // Import FavoritesContext
 
 const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
-  const toggleFavorite = (photoId) => {
-    // Implement logic to toggle favorite status of a photo
-    console.log(`Toggle favorite for photo ${photoId}`);
-  };
+  // Access toggleFavorite and favoritePhotos from FavoritesContext
+  const { toggleFavorite, favoritePhotos } = useContext(FavoritesContext);
 
+  // Function to render favorite button
   const renderFavButton = () => {
     if (!singlePhotoDetail) return null;
     return (
       <PhotoFavButton
         photoId={singlePhotoDetail.id}
-        toggleFavorite={toggleFavorite} // Pass toggleFavorite function
-        isFavorite={singlePhotoDetail.isFavorite}
+        toggleFavorite={toggleFavorite}
+        isFavorite={favoritePhotos.includes(singlePhotoDetail.id)}
       />
     );
   };
@@ -57,7 +56,7 @@ const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
                 alt={singlePhotoDetail.user.name}
               />
               {/* Display location details if available */}
-              {singlePhotoDetail.user.location && ( // Check if location object exists
+              {singlePhotoDetail.user.location && typeof singlePhotoDetail.user.location === 'object' && (
                 <div>
                   <p>Location: {singlePhotoDetail.user.location}</p> {/* Assuming location is a string */}
                   <p>City: {singlePhotoDetail.user.location.city}</p>
@@ -72,7 +71,7 @@ const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
           <div className="photo-details-modal__images">
             <h3>Similar Photos</h3>
             {/* Render similar photos using the PhotoList component */}
-            <PhotoList photos={singlePhotoDetail.similarPhotos} /> {/* Use PhotoList component */}
+            <PhotoList photos={singlePhotoDetail.similarPhotos} /> {/* Use PhotoList without passing favoritePhotos */}
           </div>
         )}
       </div>

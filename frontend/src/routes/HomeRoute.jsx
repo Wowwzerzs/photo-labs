@@ -1,62 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, useMemo } from "react";
 import "../styles/HomeRoute.scss";
 import TopNavigationBar from "../components/TopNavigationBar";
 import PhotoList from "../components/PhotoList";
-import PhotoDetailsModal from "./PhotoDetailsModal";
-import PhotoFavButton from "../components/PhotoFavButton"; // Import PhotoFavButton component
+import { FavoritesContext } from "App";
 
-const HomeRoute = ({ photos, topics, setPhotoDetail }) => {
-  const [favoritePhotos, setFavoritePhotos] = useState([]);
-  const [displayModal, setDisplayModal] = useState(false);
-  const [singlePhotoDetail, setSinglePhotoDetail] = useState(null);
+const HomeRoute = ({ topics }) => {
+  const { favorites, isLike, setIsLike } = useContext(FavoritesContext);
 
-  // Function to toggle favorite status of a photo
-  const toggleFavorite = (photoId) => {
-    if (favoritePhotos.includes(photoId)) {
-      setFavoritePhotos(favoritePhotos.filter(id => id !== photoId));
-    } else {
-      setFavoritePhotos([...favoritePhotos, photoId]);
-    }
+  // Filter favorites based on whether they are liked or not
+  const allFavorites = useMemo(() => {
+    return favorites.filter((item) => {
+      return item.liked;
+    });
+  });
+
+  // Toggle like status
+  const toggleLike = () => {
+    setIsLike(!isLike);
   };
 
-  // Function to handle click on a photo
-  const handlePhotoClick = (photo) => {
-    setSinglePhotoDetail(photo); // Set the single photo detail when a photo is clicked
-    setDisplayModal(true); // Display the modal
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setDisplayModal(false); // Hide the modal
-  };
+  // Determine if there are liked photos
+  const thereIsLike = allFavorites.length > 0;
 
   return (
     <div className="home-route">
-      {/* Top navigation bar */}
-      <TopNavigationBar topics={topics} favoriteCount={favoritePhotos.length} />
-      {/* Photo list component */}
-      <PhotoList
-        photos={photos}
-        toggleFavorite={toggleFavorite}
-        favoritePhotos={favoritePhotos}
-        handlePhotoClick={handlePhotoClick}
+      {/* Render TopNavigationBar with props */}
+      <TopNavigationBar
+        topics={topics}
+        selected={thereIsLike}
+        onClick={toggleLike}
+        displayAlert={thereIsLike}
       />
-  
-      {displayModal && (
-        <PhotoDetailsModal
-          closeModal={closeModal}
-          singlePhotoDetail={singlePhotoDetail}
-        >
-          {/* Include PhotoFavButton component here */}
-          <div className="photo-details-modal__fav-button">
-            <PhotoFavButton
-              photoId={singlePhotoDetail.id}
-              toggleFavorite={toggleFavorite}
-              isFavorite={favoritePhotos.includes(singlePhotoDetail.id)}
-            />
-          </div>
-        </PhotoDetailsModal>
-      )}
+      {/* Render PhotoList with photos based on whether the user is viewing liked photos or all favorites */}
+      <PhotoList photos={isLike ? allFavorites : favorites} />
     </div>
   );
 };
