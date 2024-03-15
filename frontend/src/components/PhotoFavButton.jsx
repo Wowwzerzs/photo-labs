@@ -3,36 +3,30 @@ import FavIcon from "./FavIcon";
 import "../styles/PhotoFavButton.scss";
 import { FavoritesContext } from "App";
 
-function PhotoFavButton({ photoId }) {
+function PhotoFavButton({ id }) {
   const [selected, setSelected] = useState(false);
   const { favorites, setFavorites, photoData } = useContext(FavoritesContext);
 
   const selectedPhoto = useMemo(() => {
     return photoData.filter((photo) => {
-      return photo.id === photoId;
+      return photo.id === id;
     });
-  }, [photoData, photoId]);
+  });
 
-  const toggleFav = () => {
+  const handleSelected = () => {
     setSelected((prev) => !prev);
 
-    const updatedFavorites = favorites.map((fav) => {
-      if (fav.id === photoId) {
-        return { ...fav, liked: !selected };
-      }
-      return fav;
-    });
-
-    setFavorites(updatedFavorites);
+    selectedPhoto[0].liked = !selected;
+    setFavorites(() => [...favorites]);
   };
 
   return (
-    <div className="photo-list__fav-icon" onClick={toggleFav}>
+    <div className="photo-list__fav-icon">
       <div className="photo-list__fav-icon-svg">
         <FavIcon
-          selected={selectedPhoto.length > 0 ? selectedPhoto[0].liked : false}
-          handleSelected={toggleFav}
-          isFavPhotoExist={selectedPhoto.length > 0}
+          selected={selectedPhoto[0].liked}
+          handleSelected={handleSelected}
+          isFavPhotoExist={""}
         />
       </div>
     </div>

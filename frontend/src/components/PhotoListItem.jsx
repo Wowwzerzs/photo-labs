@@ -1,58 +1,41 @@
-import React, { useState } from "react";
-import PhotoFavButton from "./PhotoFavButton";
+import React, { useContext } from "react";
 import "../styles/PhotoListItem.scss";
+import PhotoFavButton from "./PhotoFavButton";
+import { FavoritesContext } from "App";
 
-const PhotoListItem = ({ photo, handleClick }) => {
-  const { id, location, urls, user } = photo;
-  const { username, profile } = user;
-  const { full } = urls;
-
-  const [showModal, setShowModal] = useState(false); // State to control modal display
+const PhotoListItem = ({ sampleDataForPhotoListItem }) => {
+  const { setShowModal, setActivePhoto, showModal } =
+    useContext(FavoritesContext);
+  const {
+    id,
+    location: { city, country },
+    urls: { full },
+    user,
+  } = sampleDataForPhotoListItem;
 
   const handleModalClick = () => {
-    setShowModal(true); // Set showModal state to true to display modal
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false); // Set showModal state to false to close modal
+    setShowModal(!showModal);
+    setActivePhoto(sampleDataForPhotoListItem);
   };
 
   return (
     <div className="photo-list__item">
-      <PhotoFavButton photoId={id} />
+      <PhotoFavButton id={id} />
 
       <div onClick={handleModalClick}>
-        <img src={full} alt="Photograph" className="photo-list__image" />
+        <img className="photo-list__image" src={full} alt={user.username} />
         <div className="photo-list__user-details">
-          <img src={profile} alt="Profile" className="photo-list__user-profile" />
+          <img
+            className="photo-list__user-profile"
+            src={user.profile}
+            alt={user.username}
+          />
           <div className="photo-list__user-info">
-            <div>{username}</div>
-            {location && (
-              <div className="photo-list__user-location">{location.city}, {location.country}</div>
-            )}
+            <h2>{user.name}</h2>
+            <p className="photo-list__user-location">{`${city} ${country}`}</p>
           </div>
         </div>
       </div>
-
-      {/* Modal */}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            {/* Modal content */}
-            <span className="close" onClick={handleCloseModal}>&times;</span>
-            <img src={full} alt="Photograph" className="modal-image" />
-            <div className="modal-user-details">
-              <img src={profile} alt="Profile" className="modal-user-profile" />
-              <div className="modal-user-info">
-                <div>{username}</div>
-                {location && (
-                  <div className="modal-user-location">{location.city}, {location.country}</div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

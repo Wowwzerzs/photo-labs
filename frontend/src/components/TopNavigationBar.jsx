@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../styles/TopNavigationBar.scss";
-import FavBadge from "./FavBadge";
 import TopicList from "./TopicList";
+import FavBadge from "./FavBadge";
+import { FavoritesContext } from "App";
 
-const TopNavigationBar = ({ topics, favoriteCount }) => {
-  const [url, setUrl] = useState(""); // State to manage URL
+const TopNavigation = ({ topics, selected, onClick, displayAlert, favoriteCount }) => {
+  const { setUrl } = useContext(FavoritesContext);
 
-  // Function to handle logo click event and set URL
   const handleClick = () => {
     setUrl("http://localhost:8001/api/photos/");
   };
@@ -17,14 +17,13 @@ const TopNavigationBar = ({ topics, favoriteCount }) => {
         PhotoLabs
       </span>
       <TopicList topics={topics} />
-      {favoriteCount > 0 && (
-        <div className="notification">
-          You have {favoriteCount} favorited photo(s).
-        </div>
-      )}
-      <FavBadge favoriteCount={favoriteCount} />
+      <FavBadge
+        selected={selected}
+        handleSelected={onClick}
+        displayAlert={displayAlert}
+      />
     </div>
   );
 };
 
-export default TopNavigationBar;
+export default TopNavigation;

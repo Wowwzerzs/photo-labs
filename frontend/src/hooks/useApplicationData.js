@@ -1,41 +1,41 @@
 import axios from "axios";
 import React, { useEffect, useReducer } from "react";
 
+const initialState = {
+  favorites: [],
+  activePhoto: null,
+  showModal: false,
+  isLike: false,
+  photoData: [],
+  topicData: [],
+  url: "http://localhost:8001/api/photos/",
+  topicListPhotos: [],
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_URL":
+      return { ...state, url: action.payload };
+    case "SET_TOPICLIST_PHOTOS":
+      return { ...state, topicListPhotos: action.payload };
+    case "SET_TOPIC_DATA":
+      return { ...state, topicData: action.payload };
+    case "SET_PHOTO_DATA":
+      return { ...state, photoData: action.payload };
+    case "SET_FAVORITES":
+      return { ...state, favorites: action.payload };
+    case "SET_ACTIVE_PHOTO":
+      return { ...state, activePhoto: action.payload };
+    case "SET_SHOW_MODAL":
+      return { ...state, showModal: action.payload };
+    case "SET_IS_LIKE":
+      return { ...state, isLike: action.payload };
+    default:
+      return state;
+  }
+};
+
 const useApplicationData = () => {
-  const initialState = {
-    favorites: [],
-    activePhoto: null,
-    showModal: false,
-    isLike: false,
-    photoData: [],
-    topicData: [],
-    url: "http://localhost:8001/api/photos/",
-    topicListPhotos: [],
-  };
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "SET_URL":
-        return { ...state, url: action.payload };
-      case "SET_TOPICLIST_PHOTOS":
-        return { ...state, topicListPhotos: action.payload };
-      case "SET_TOPIC_DATA":
-        return { ...state, topicData: action.payload };
-      case "SET_PHOTO_DATA":
-        return { ...state, photoData: action.payload };
-      case "SET_FAVORITES":
-        return { ...state, favorites: action.payload };
-      case "SET_ACTIVE_PHOTO":
-        return { ...state, activePhoto: action.payload };
-      case "SET_SHOW_MODAL":
-        return { ...state, showModal: action.payload };
-      case "SET_IS_LIKE":
-        return { ...state, isLike: action.payload };
-      default:
-        return state;
-    }
-  };
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const useApplicationData = () => {
     };
 
     fetchData();
-  }, []); // This effect runs once when the component mounts
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +69,7 @@ const useApplicationData = () => {
     };
 
     fetchData();
-  }, [state.url]); // This effect runs whenever the `url` state changes
+  }, [state.url]);
 
   return {
     favorites: state.favorites && state.photoData,

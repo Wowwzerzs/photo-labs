@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import FavIcon from "./FavIcon";
 import "../styles/FavBadge.scss";
 
-const FavBadge = ({ favoriteCount }) => {
-  const [selected, setSelected] = useState(false);
-
-  const displayAlert = favoriteCount > 0;
-
-  const handleSelected = () => {
-    setSelected(!selected);
-  };
-
+const FavBadge = ({ displayAlert, selected, handleSelected }) => {
   return (
     <div className="fav-badge">
       <FavIcon

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../styles/TopicListItem.scss";
+import { FavoritesContext } from "App";
 
-const TopicListItem = ({ title }) => {
+const TopicListItem = ({ sampleDataForTopicListItem }) => {
+  const { setUrl } = useContext(FavoritesContext);
+
+  const handleClick = () => {
+    setUrl(
+      `http://localhost:8001/api/topics/photos/${sampleDataForTopicListItem.id}`
+    );
+  };
   return (
-    <div className="topic-list__item">
-      <span className="topic-link">{title}</span>
+    <div className="topic-list__item" onClick={handleClick}>
+      {sampleDataForTopicListItem.title}
     </div>
   );
 };

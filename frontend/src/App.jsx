@@ -1,12 +1,11 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import "./App.scss";
-import HomeRoute from "./routes/HomeRoute";
-import PhotoDetailsModal from "./routes/PhotoDetailsModal";
-import useApplicationData from "./hooks/useApplicationData";
+import "./index.css";
+import HomeRoute from "routes/HomeRoute";
+import PhotoDetailsModal from "routes/PhotoDetailsModal";
+import useApplicationData from "hooks/useApplicationData";
 
-// Create the FavoritesContext
 export const FavoritesContext = createContext(null);
-
 const App = () => {
   const {
     favorites,
@@ -40,9 +39,9 @@ const App = () => {
           topicListPhotos,
         }}
       >
-        {/* Render both HomeRoute and PhotoDetailsModal within the FavoritesContext.Provider */}
-        <HomeRoute topics={topics} />
-        {showModal && <PhotoDetailsModal singlePhotoDetail={activePhoto} closeModal={() => setShowModal(false)} />}
+        {" "}
+        {showModal && <PhotoDetailsModal data={activePhoto} />}
+        <HomeRoute topics={topics} photos={favorites} />
       </FavoritesContext.Provider>
     </div>
   );

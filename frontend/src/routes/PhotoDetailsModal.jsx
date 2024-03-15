@@ -1,79 +1,56 @@
-import React, { useContext } from 'react';
-import '../styles/PhotoDetailsModal.scss';
-import closeSymbol from '../assets/closeSymbol.svg';
-import PhotoList from '../components/PhotoList'; 
-import PhotoFavButton from '../components/PhotoFavButton'; 
-import { FavoritesContext } from 'App'; // Import FavoritesContext
+import React, { useContext } from "react";
+import "../styles/PhotoDetailsModal.scss";
+import "../styles/PhotoListItem.scss";
+import closeSymbol from "../assets/closeSymbol.svg";
+import { FavoritesContext } from "App";
+import PhotoList from "components/PhotoList";
+import PhotoFavButton from "components/PhotoFavButton";
 
-const PhotoDetailsModal = ({ closeModal, singlePhotoDetail }) => {
-  // Access toggleFavorite and favoritePhotos from FavoritesContext
-  const { toggleFavorite, favoritePhotos } = useContext(FavoritesContext);
+const PhotoDetailsModal = ({ data }) => {
+  const { setShowModal } = useContext(FavoritesContext);
 
-  // Function to render favorite button
-  const renderFavButton = () => {
-    if (!singlePhotoDetail) return null;
-    return (
-      <PhotoFavButton
-        photoId={singlePhotoDetail.id}
-        toggleFavorite={toggleFavorite}
-        isFavorite={favoritePhotos.includes(singlePhotoDetail.id)}
-      />
-    );
-  };
+  const { photo2, photo3, photo4, photo5 } = data.similar_photos;
+
+  const {
+    id,
+    location: { city, country },
+    urls: { regular },
+    user,
+  } = data;
 
   return (
-    <div className="photo-details-modal">
-      {/* Top bar of the modal */}
-      <div className="photo-details-modal__top-bar">
-        <h2 className="photo-details-modal__header">Photo Details</h2>
-        {/* Close button */}
-        <button className="photo-details-modal__close-button" onClick={closeModal}> 
-          <img src={closeSymbol} alt="close symbol" />
-        </button>
+    <div className="photo-details-modal ">
+      <button
+        className="photo-details-modal__close-button"
+        onClick={() => setShowModal(false)}
+      >
+        <img src={closeSymbol} alt="close symbol" />
+      </button>
+      <PhotoFavButton id={id} />
+      <img
+        src={regular}
+        alt={user.username}
+        className="photo-details-modal__image "
+      />
+
+      <div className="photo-list__user-details">
+        <img
+          className="photo-list__user-profile"
+          src={user.profile}
+          alt={user.username}
+        />
+        <div className="photo-list__user-info">
+          <h2>{user.name}</h2>
+          <p className="photo-list__user-location">{`${city} ${country}`}</p>
+        </div>
       </div>
-      {/* Content of the modal */}
-      <div className="photo-details-modal__content">
-        {/* Render if single photo detail is available */}
-        {singlePhotoDetail && (
-          <div>
-            {/* Display the photo */}
-            <img
-              className="photo-details-modal__image"
-              src={singlePhotoDetail.urls.full}
-              alt={singlePhotoDetail.alt_description}
-            />
-            {/* Display photo owner's name and description */}
-            <p>{singlePhotoDetail.user.name}</p>
-            <p>{singlePhotoDetail.description}</p>
-            {/* Render the favorite button */}
-            {renderFavButton()}
-            {/* Photographer details */}
-            <div>
-              <h3>Photographer Details</h3>
-              {/* Display photographer's profile image */}
-              <img
-                src={singlePhotoDetail.user.profile_image && singlePhotoDetail.user.profile_image.large} 
-                alt={singlePhotoDetail.user.name}
-              />
-              {/* Display location details if available */}
-              {singlePhotoDetail.user.location && typeof singlePhotoDetail.user.location === 'object' && (
-                <div>
-                  <p>Location: {singlePhotoDetail.user.location}</p> {/* Assuming location is a string */}
-                  <p>City: {singlePhotoDetail.user.location.city}</p>
-                  <p>Country: {singlePhotoDetail.user.location.country}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-        {/* Render similar photos if available */}
-        {singlePhotoDetail && singlePhotoDetail.similarPhotos && singlePhotoDetail.similarPhotos.length > 0 && (
-          <div className="photo-details-modal__images">
-            <h3>Similar Photos</h3>
-            {/* Render similar photos using the PhotoList component */}
-            <PhotoList photos={singlePhotoDetail.similarPhotos} /> {/* Use PhotoList without passing favoritePhotos */}
-          </div>
-        )}
+
+      <div className="photo-details-modal__images">
+        <h2 style={{ marginLeft: "30px" }}>Similar photos</h2>
+        <PhotoList
+          photos={[photo2, photo3, photo4, photo5]}
+          className="photo-details-modal__images"
+        />
       </div>
     </div>
   );

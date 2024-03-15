@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
-import { FavoritesContext } from "App";
+import React, { useContext } from "react";
 
-const FavIcon = ({ displayAlert, selected }) => {
-  const { handleSelected } = useContext(FavoritesContext);
-
+const FavIcon = ({ displayAlert, selected, handleSelected }) => {
   return (
     <svg
       width="20"
