@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useReducer } from "react";
 
+// Initial state for the application data
 const initialState = {
   favorites: [],
   activePhoto: null,
@@ -10,8 +11,10 @@ const initialState = {
   topicData: [],
   url: "http://localhost:8001/api/photos/",
   topicListPhotos: [],
+  error: null, 
 };
 
+// Reducer function to handle state changes
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_URL":
@@ -30,14 +33,18 @@ const reducer = (state, action) => {
       return { ...state, showModal: action.payload };
     case "SET_IS_LIKE":
       return { ...state, isLike: action.payload };
+      case "SET_ERROR": // New action type to set error
+      return { ...state, error: action.payload };
     default:
       return state;
   }
 };
 
+// Custom hook to manage application data and side effects
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+// Fetch initial data when component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,13 +54,14 @@ const useApplicationData = () => {
         dispatch({ type: "SET_TOPIC_DATA", payload: topicData.data });
         dispatch({ type: "SET_PHOTO_DATA", payload: allData.data });
       } catch (error) {
-        console.log(error);
+        dispatch({ type: "SET_ERROR", payload: error.message });
       }
     };
 
     fetchData();
   }, []);
 
+  // Fetch data when URL changes
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,13 +72,14 @@ const useApplicationData = () => {
           payload: topicListPhotos.data,
         });
       } catch (error) {
-        console.log(error);
+        dispatch({ type: "SET_ERROR", payload: error.message });
       }
     };
 
     fetchData();
   }, [state.url]);
 
+   // Return state and functions to update state
   return {
     favorites: state.favorites && state.photoData,
     setFavorites: (favorites) =>
