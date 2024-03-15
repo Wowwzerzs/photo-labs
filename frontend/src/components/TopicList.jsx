@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/TopicList.scss";
 import TopicListItem from "./TopicListItem";
 
+// Sample data for topic list
 const sampleDataForTopicList = [
   {
     id: "1",
@@ -20,16 +21,17 @@ const sampleDataForTopicList = [
   },
 ];
 
+// TopicList component
 const TopicList = ({ topics }) => {
+  // Use topics passed from props or use sample data if not provided
   const currentTopic = topics || sampleDataForTopicList;
 
   return (
     <div className="top-nav-bar__topic-list">
-      {currentTopic.map((data) => {
-        return (
-          <TopicListItem key={data.id} sampleDataForTopicListItem={data} />
-        );
-      })}
+      {/* Map through topics and render TopicListItem for each */}
+      {currentTopic.map((data) => (
+        <TopicListItem key={data.id} sampleDataForTopicListItem={data} />
+      ))}
     </div>
   );
 };

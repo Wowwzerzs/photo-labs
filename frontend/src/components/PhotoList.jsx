@@ -1,82 +1,30 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "../styles/PhotoList.scss";
 import PhotoListItem from "./PhotoListItem";
 import { FavoritesContext } from "App";
 
-const sampleDataForPhotoList = [
-  {
-    id: "1",
-    location: {
-      city: "Montreal",
-      country: "Canada",
-    },
-    urls: {
-      full: `${process.env.PUBLIC_URL}/Image-1-Full.jpeg`,
-      regular: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-    },
-    user: {
-      id: "1",
-      username: "exampleuser",
-      name: "Joe Example",
-      profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-    },
-  },
-  {
-    id: "2",
-    location: {
-      city: "Toronto",
-      country: "Canada",
-    },
-    urls: {
-      full: `${process.env.PUBLIC_URL}/Image-2-Full.jpeg`,
-      regular: `${process.env.PUBLIC_URL}/Image-2-Regular.jpeg`,
-    },
-    user: {
-      id: "2",
-      username: "exampleuser",
-      name: "Joe Example",
-      profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-    },
-  },
-  {
-    id: "3",
-    location: {
-      city: "Ottawa",
-      country: "Canada",
-    },
-    urls: {
-      full: `${process.env.PUBLIC_URL}/Image-3-Full.jpeg`,
-      regular: `${process.env.PUBLIC_URL}/Image-3-Regular.jpeg`,
-    },
-    user: {
-      id: "3",
-      username: "exampleuser",
-      name: "Joe Example",
-      profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-    },
-  },
-];
-
 const PhotoList = () => {
+  // Destructure required context values
   const { favorites, isLike, topicListPhotos } = useContext(FavoritesContext);
 
+  // Extract ids from topicListPhotos
   const ids = topicListPhotos.map((el) => el.id);
-  console.log(favorites);
-  const filteredData = favorites.filter((item) => ids.includes(item.id));
-  console.log(isLike);
-  const likedPhotos = favorites.filter((photo) => photo.liked);
-  const currenPhotos = isLike
-    ? likedPhotos
-    : filteredData || sampleDataForPhotoList;
 
-  console.log(likedPhotos);
+  // Filter favorites based on ids from topicListPhotos
+  const filteredData = favorites.filter((item) => ids.includes(item.id));
+
+  // Filter liked photos from favorites
+  const likedPhotos = favorites.filter((photo) => photo.liked);
+
+  // Determine the photos to display based on isLike value
+  const currentPhotos = isLike ? likedPhotos : filteredData;
+
   return (
     <ul className="photo-list">
-      {currenPhotos.map((data) => {
-        return (
-          <PhotoListItem key={data.id} sampleDataForPhotoListItem={data} />
-        );
-      })}
+      {/* Map over currentPhotos to render PhotoListItem components */}
+      {currentPhotos.map((data) => (
+        <PhotoListItem key={data.id} sampleDataForPhotoListItem={data} />
+      ))}
     </ul>
   );
 };

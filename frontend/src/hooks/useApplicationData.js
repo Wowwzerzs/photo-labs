@@ -79,7 +79,7 @@ const useApplicationData = () => {
     fetchData();
   }, [state.url]);
 
-   // Return state and functions to update state
+  // Return state and functions to update state
   return {
     favorites: state.favorites && state.photoData,
     setFavorites: (favorites) =>
