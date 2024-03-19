@@ -4,9 +4,7 @@ import PhotoList from "components/PhotoList";
 import TopNavigation from "components/TopNavigationBar";
 import { FavoritesContext } from "App";
 
-// HomeRoute component
 const HomeRoute = ({ topics }) => {
-  // Access necessary context values
   const { favorites, isLike, setIsLike, photoData, setFavorites } =
     useContext(FavoritesContext);
 
@@ -27,14 +25,12 @@ const HomeRoute = ({ topics }) => {
 
   return (
     <div className="home-route">
-      {/* Render TopNavigation component */}
       <TopNavigation
         topics={topics}
         selected={thereIsLike}
         onClick={isLikeController}
         displayAlert={thereIsLike}
       />
-      {/* Render PhotoList component */}
       <PhotoList photos={isLike ? allFavorites : favorites} />
     </div>
   );

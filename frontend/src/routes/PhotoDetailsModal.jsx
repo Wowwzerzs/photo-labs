@@ -6,9 +6,8 @@ import { FavoritesContext } from "App";
 import PhotoList from "components/PhotoList";
 import PhotoFavButton from "components/PhotoFavButton";
 
-// PhotoDetailsModal component
+
 const PhotoDetailsModal = ({ data }) => {
-  // Access setShowModal function from FavoritesContext
   const { setShowModal } = useContext(FavoritesContext);
 
   // Destructure data object
@@ -29,7 +28,6 @@ const PhotoDetailsModal = ({ data }) => {
       >
         <img src={closeSymbol} alt="close symbol" />
       </button>
-      {/* Render PhotoFavButton */}
       <PhotoFavButton id={id} />
       {/* Display main image */}
       <img
@@ -52,7 +50,6 @@ const PhotoDetailsModal = ({ data }) => {
       {/* Display similar photos */}
       <div className="photo-details-modal__images">
         <h2 style={{ marginLeft: "30px" }}>Similar photos</h2>
-        {/* Render PhotoList component */}
         <PhotoList
           photos={[photo2, photo3, photo4, photo5]}
           className="photo-details-modal__images"

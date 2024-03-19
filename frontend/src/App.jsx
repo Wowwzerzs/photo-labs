@@ -5,10 +5,8 @@ import HomeRoute from "routes/HomeRoute";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import useApplicationData from "hooks/useApplicationData";
 
-// Create context for favorites
 export const FavoritesContext = createContext(null);
 
-// Main App component
 const App = () => {
   // Destructure values from custom hook useApplicationData
   const {
@@ -44,9 +42,7 @@ const App = () => {
           topicListPhotos,
         }}
       >
-        {/* Render PhotoDetailsModal if showModal is true */}
         {showModal && <PhotoDetailsModal data={activePhoto} />}
-        {/* Render HomeRoute with topics and favorites */}
         <HomeRoute topics={topics} photos={favorites} />
       </FavoritesContext.Provider>
     </div>

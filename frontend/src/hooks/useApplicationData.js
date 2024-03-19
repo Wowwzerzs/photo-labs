@@ -33,7 +33,7 @@ const reducer = (state, action) => {
       return { ...state, showModal: action.payload };
     case "SET_IS_LIKE":
       return { ...state, isLike: action.payload };
-      case "SET_ERROR": // New action type to set error
+      case "SET_ERROR": 
       return { ...state, error: action.payload };
     default:
       return state;
