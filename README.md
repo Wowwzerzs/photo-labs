@@ -22,3 +22,7 @@ Read `backend/readme` for further setup details.
 cd backend
 npm start
 ```
+
+## Final Product 
+
+!["Final product Gif"](https://github.com/Wowwzerzs/photo-labs/blob/main/frontend/doc/Photolabs.gif?raw=true)
